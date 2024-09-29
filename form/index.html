@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form</title>
+</head>
+<style>
+    :root {
+        --primary-color: #337AB7;
+        --hover-color: #286090;
+        --font-family: 'Arial', sans-serif;
+        --border-radius: 2em;
+        --transition-duration: 0.3s;
+    }
+
+    body {
+        font-family: var(--font-family);
+        margin: 0;
+        padding: 0;
+        background-color: #7871c2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    form {
+        width: 50%;
+        max-width: 500px;
+        padding: 2em;
+        border: 1px solid #CCC;
+        border-radius: var(--border-radius);
+        background-color: #FFF;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    form div + div {
+        margin-top: 1em;
+    }
+
+    input {
+        font-size: 1em;
+        font-family: var(--font-family);
+        width: 100%;
+        padding: 0.7em;
+        box-sizing: border-box;
+        border: 1px solid #CCC;
+        border-radius: var(--border-radius);
+        transition: border var(--transition-duration);
+    }
+
+    input:focus {
+        border: 1px solid var(--primary-color);
+        outline: none;
+    }
+
+    input[type="submit"] {
+        font-size: 1em;
+        padding: 0.7em;
+        color: #FFF;
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        float: right;
+        transition: background-color var(--transition-duration);
+    }
+
+    input[type="submit"]:hover {
+        background-color: var(--hover-color);
+    }
+
+    @media screen and (max-width: 600px) {
+        body {
+            justify-content: flex-start;
+            padding-top: 2em;
+        }
+
+        form {
+            width: 100%;
+            padding: 1em;
+        }
+    }
+</style>
+
+<body>
+    <form id="myForm">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myForm").submit(function(event){
+                event.preventDefault();
+                var name = $("#name").val();
+                var password = $("#password").val();
+                var email = $("#email").val();
+                $.ajax({
+                    url: 'https://api-url.com',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {name: name, password: password, email: email},
+                    success: function(data, textStatus, jQxhr){
+                        console.log(data);
+                    },
+                    error: function(jqXhr, textStatus, errorThrown){
+                        console.log(errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
